@@ -697,6 +697,101 @@
     @media (max-width: 600px){
       .profile-card{ flex-direction:column; text-align:center; }
     }
+
+    /* ===== THEME BUTTON ===== */
+.theme-btn{
+  margin-left: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.theme-btn:hover{
+  background: linear-gradient(135deg, rgba(255,45,85,.12), rgba(91,140,255,.12));
+}
+
+/* ===== DARK MODE (aktif kalau body punya class .dark) ===== */
+body.dark{
+  --line: #e5e7eb;
+  --text: #f3f4f6;
+  --muted: #cbd5e1;
+
+  --card: rgba(17,24,39,.72);
+  --shadow: 0 16px 40px rgba(0,0,0,.40);
+
+  --bg1: rgba(255,45,85,.14);
+  --bg2: rgba(91,140,255,.14);
+}
+
+/* background body jadi gelap */
+body.dark{
+  background:
+    radial-gradient(900px 450px at 15% 10%, rgba(255,45,85,.14), transparent 60%),
+    radial-gradient(900px 450px at 85% 25%, rgba(91,140,255,.14), transparent 55%),
+    linear-gradient(180deg, #0b1220, #050914);
+}
+
+/* frame + header */
+body.dark .frame{
+  background: rgba(10,15,25,.68);
+}
+body.dark header{
+  background: rgba(10,15,25,.85);
+}
+
+/* nav + button */
+body.dark nav{
+  border-color: #e5e7eb;
+}
+body.dark nav a{
+  background: rgba(17,24,39,.70);
+  color: var(--text);
+  border-right-color: #e5e7eb;
+}
+body.dark nav a:hover{
+  background: rgba(255,255,255,.06);
+}
+body.dark .theme-btn{
+  background: rgba(17,24,39,.70);
+  color: var(--text);
+  border-color: #e5e7eb;
+}
+
+/* card-card utama biar teksnya jelas */
+body.dark .profile-desc,
+body.dark .hero p,
+body.dark .skills-desc,
+body.dark .port-desc,
+body.dark footer{
+  color: rgba(243,244,246,.92);
+}
+
+/* input form */
+body.dark input[type="text"],
+body.dark input[type="date"],
+body.dark textarea{
+  background: rgba(17,24,39,.70);
+  color: var(--text);
+  border-color: rgba(229,231,235,.35);
+}
+body.dark input::placeholder,
+body.dark textarea::placeholder{
+  color: rgba(203,213,225,.75);
+}
+
+/* table */
+body.dark tbody td{
+  background: rgba(17,24,39,.55);
+  color: var(--text);
+}
+body.dark tbody tr:nth-child(even) td{
+  background: rgba(255,255,255,.03);
+}
+
   </style>
 </head>
 
@@ -721,6 +816,9 @@
         <a href="#portfolio">Portofolio</a>
         <a href="#message">Message Us</a>
       </nav>
+
+      <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+  🌙 Dark</button>
     </header>
 
     <!-- HOME -->
@@ -1086,6 +1184,40 @@
     });
 
     render();
+    // ===== THEME TOGGLE =====
+const themeToggle = document.getElementById("themeToggle");
+const THEME_KEY = "theme_mode_v1";
+
+function applyTheme(mode){
+  const isDark = mode === "dark";
+  document.body.classList.toggle("dark", isDark);
+  if(themeToggle){
+    themeToggle.textContent = isDark ? "☀️ Light" : "🌙 Dark";
+  }
+}
+
+function initTheme(){
+  const saved = localStorage.getItem(THEME_KEY);
+  if(saved){
+    applyTheme(saved);
+    return;
+  }
+  // default: ikut sistem OS (kalau belum pernah pilih)
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(prefersDark ? "dark" : "light");
+}
+
+if(themeToggle){
+  themeToggle.addEventListener("click", () => {
+    const nowDark = document.body.classList.contains("dark");
+    const next = nowDark ? "light" : "dark";
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+  });
+}
+
+initTheme();
+
   </script>
 </body>
 </html>
