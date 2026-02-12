@@ -2,311 +2,957 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Form Belajar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Portfolio</title>
 
   <style>
-    /* =========================
-       1) RESET SEDERHANA
-    ========================== */
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
+    :root{
+      --line:#1a1a1a;
+
+      --accent:#ff2d55;     /* merah-pink */
+      --accent2:#5b8cff;    /* biru */
+      --bg1:#fff1f5;
+      --bg2:#eef5ff;
+
+      --text:#111827;
+      --muted:#6b7280;
+
+      --card:#ffffff;
+      --shadow: 0 14px 35px rgba(0,0,0,.10);
+      --radius: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: #fff;
-      color: #111;
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 15% 10%, var(--bg1), transparent 60%),
+        radial-gradient(900px 450px at 85% 25%, var(--bg2), transparent 55%),
+        linear-gradient(180deg, #ffffff, #f7f7f7);
     }
 
-    /* =========================
-       2) WRAPPER & BORDER LUAR
-       (mirip frame di gambar)
-    ========================== */
-    .page-frame {
-      border: 2px solid #333;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    .frame{
+      min-height:100vh;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
     }
 
-    /* =========================
-       3) NAVBAR
-    ========================== */
-    header {
-      border-bottom: 2px solid #333;
+    /* ===== NAVBAR ===== */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      border-bottom: 2px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
 
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #ffd400;
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-    .logo span { font-size: 12px; line-height: 1; }
-
-    /* menu kotak-kotak */
-    nav {
-      display: flex;
-      border: 2px solid #777;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    nav a {
-      text-decoration: none;
-      color: #111;
-      padding: 10px 18px;
-      border-right: 2px solid #777;
-      background: #f6f6f6;
-      font-size: 14px;
-    }
-    nav a:last-child { border-right: none; }
-    nav a:hover { background: #eaeaea; }
-
-    /* =========================
-       4) KONTEN UTAMA
-    ========================== */
-    main {
-      flex: 1;
-      padding: 40px 50px;
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    .title {
-      margin: 0 0 6px 0;
-      font-size: 28px;
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      overflow:hidden;
+      border:3px solid var(--line);
+      box-shadow: var(--shadow);
+      background:#fff;
+      transition: transform .2s ease;
+      flex: 0 0 auto;
     }
-    .subtitle {
-      margin: 0 0 30px 0;
-      font-size: 14px;
-      color: #333;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 520px 1fr; /* kiri form, kanan tabel */
-      gap: 60px;
-      align-items: start;
-    }
-
-    /* =========================
-       5) FORM
-    ========================== */
-    .form-card {
-      padding: 10px 0;
+    .logo:hover{ transform: scale(1.05); }
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 120px 18px 1fr; /* label : input */
-      align-items: center;
-      margin: 14px 0;
-      gap: 10px;
-      font-size: 14px;
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand-name{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .brand-sub{
+      font-size:12.5px;
+      color: var(--muted);
+      margin-top:2px;
     }
 
-    label { color: #222; }
-
-    input[type="text"],
-    input[type="date"],
-    textarea {
-      width: 100%;
-      border: 2px solid #888;
-      border-radius: 4px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
+    nav{
+      display:flex;
+      border:2px solid #222;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      text-decoration:none;
+      color: var(--text);
+      background:#fff;
+      padding:10px 18px;
+      border-right:2px solid #222;
+      font-size:14px;
+      white-space: nowrap;
+      transition: background .2s ease, color .2s ease;
+    }
+    nav a:last-child{ border-right:none; }
+    nav a:hover{
+      background: linear-gradient(135deg, rgba(255,45,85,.12), rgba(91,140,255,.12));
     }
 
-    textarea {
-      resize: none;
-      height: 120px;
+    /* ===== SECTION ===== */
+    .section{
+      padding: 34px 46px;
+      border-bottom: 2px solid var(--line);
+    }
+    section{ scroll-margin-top: 90px; }
+    h2{ margin:0 0 14px; font-size:22px; }
+
+    /* ===== HERO ===== */
+    .hero h1{
+      margin:0;
+      font-size:36px;
+      letter-spacing:.3px;
+    }
+    .hero p{
+      margin:8px 0 18px;
+      font-size:14px;
+      color:#222;
     }
 
-    .radio-wrap {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .radio-wrap label {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px 14px;
-      border: 2px solid #777;
-      background: #ececec;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .btn:hover { background: #e2e2e2; }
-
-    /* =========================
-       6) TABEL
-    ========================== */
-    .table-card {
-      width: 100%;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      font-size: 14px;
-    }
-
-    thead th {
-      background: #e6e6e6;
-      border: 1px solid #cfcfcf;
-      padding: 12px 10px;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    tbody td {
-      border: 1px solid #d7d7d7;
-      padding: 14px 10px;
-      vertical-align: middle;
-      text-align: center;
-      word-wrap: break-word;
-    }
-
-    .link {
-      color: #0b63ff;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    /* ikon delete sederhana */
-    .trash {
-      width: 18px;
-      height: 18px;
-      display: inline-block;
+    /* ===== BANNER (gambar + overlay keren) ===== */
+    .banner{
       position: relative;
-      border: 2px solid #111;
-      border-top: none;
-      border-radius: 2px;
-    }
-    .trash::before {
-      content: "";
-      position: absolute;
-      top: -6px;
-      left: 2px;
-      right: 2px;
-      height: 4px;
-      border: 2px solid #111;
-      border-bottom: none;
-      border-radius: 2px 2px 0 0;
-    }
-    .trash::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 50%;
-      width: 2px;
-      height: 10px;
-      background: #111;
-      transform: translateX(-50%);
+      height: 320px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border:2px solid rgba(255, 246, 246, 0.18);
+      box-shadow: var(--shadow);
+      background:#ffffff;
+      isolation: isolate;
     }
 
-    /* =========================
-       7) FOOTER
-    ========================== */
-    footer {
-      border-top: 2px solid #333;
-      padding: 18px 24px;
-      display: flex;
-      justify-content: flex-end;
-      font-size: 14px;
+    /* gambar banner */
+    .banner-img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+      filter: contrast(1.05) saturate(1.1);
     }
 
-    /* =========================
-       8) RESPONSIVE (HP)
-    ========================== */
-    @media (max-width: 1000px) {
-      main { padding: 24px; }
-      .grid { grid-template-columns: 1fr; gap: 30px; }
-      nav a { padding: 10px 12px; }
+    /* overlay gradient (neon) */
+    .banner::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(800px 300px at 20% 30%, rgba(255,45,85,.35), transparent 60%),
+        radial-gradient(800px 300px at 80% 30%, rgba(91,140,255,.35), transparent 60%),
+        linear-gradient(135deg, rgba(0,0,0,.62), rgba(0,0,0,.30));
+      z-index: 1;
+    }
+
+    /* overlay garis tipis biar elegan */
+    .banner::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.06), transparent 35%, rgba(255,255,255,.04));
+      z-index: 2;
+      pointer-events:none;
+    }
+
+    .banner-content{
+      position:absolute;
+      inset:0;
+      z-index: 3;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:center;
+      padding: 26px;
+      color:#e5e7eb;
+    }
+
+    .banner-kicker{
+      font-size:12px;
+      letter-spacing:.18em;
+      opacity:.9;
+      margin-bottom:10px;
+    }
+    .banner-title{
+      margin:0 0 10px;
+      font-size:34px;
+      line-height:1.05;
+      letter-spacing:.4px;
+      color: #ffffff;
+    }
+.banner-desc{
+  background: linear-gradient(90deg,#ffffff,#5b8cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight:600;
+}
+
+    .banner-badges{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 4px;
+    }
+    .b-badge{
+      font-size:12px;
+      font-weight:900;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .banner-right{
+      position:relative;
+      height: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .banner-chip{
+      position:absolute;
+      top:14px;
+      right:14px;
+      font-size:12px;
+      font-weight:900;
+      padding:7px 12px;
+      border-radius:999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.35);
+      color:#fff;
+    }
+    .banner-glow{
+      position:absolute;
+      inset:-40px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,45,85,.55), transparent 55%),
+        radial-gradient(circle at 70% 50%, rgba(91,140,255,.55), transparent 55%);
+      filter: blur(18px);
+      opacity: .95;
+    }
+
+    /* kalau banner.jpg gak ada → munculin fallback */
+    .banner-fallback{
+      position:absolute;
+      inset:0;
+      z-index: 0;
+      display:grid;
+      place-items:center;
+      color: rgba(229,231,235,.85);
+      font-weight:800;
+      letter-spacing:.08em;
+    }
+
+    /* ===== PROFILE CARD ===== */
+    .profile-card{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      background: var(--card);
+      border:2px solid rgba(0,0,0,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-top: 10px;
+      position: relative;
+      overflow:hidden;
+    }
+    .profile-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(255,45,85,.10), rgba(91,140,255,.10));
+      opacity:.7;
+      pointer-events:none;
+    }
+    .profile-card > *{ position: relative; }
+
+    .profile-photo{
+      width:120px;
+      height:120px;
+      border-radius:14px;
+      overflow:hidden;
+      border:2px solid #111;
+      flex: 0 0 auto;
+      background:#fff;
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+    .profile-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .profile-info h3{
+      margin:0 0 6px 0;
+      font-size:18px;
+    }
+    .profile-role{
+      margin:0 0 8px 0;
+      color: var(--muted);
+      font-size:13px;
+      font-weight:900;
+    }
+    .profile-desc{
+      margin:0 0 10px 0;
+      font-size:13.5px;
+      line-height:1.6;
+      color:#222;
+      max-width: 760px;
+    }
+    .profile-tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .profile-tags span{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:2px solid #111;
+      background:#fff;
+      font-weight:900;
+    }
+
+    /* ===== HQ ===== */
+    .hq-row{
+      display:flex; gap:56px; flex-wrap:wrap;
+      align-items:flex-start; padding: 10px 0;
+    }
+    .hq-item{ width:140px; text-align:center; }
+    .circle{
+      width:120px;height:120px;border-radius:50%;
+      border:2px solid #111;
+      background:
+        radial-gradient(circle at 30% 30%, #ffffff, #f1f1f1),
+        linear-gradient(135deg, rgba(255,45,85,.10), rgba(91,140,255,.10));
+      box-shadow: var(--shadow);
+      margin: 0 auto 10px;
+      transition: transform .2s ease;
+    }
+  .circle{
+  width:120px;height:120px;border-radius:50%;
+  border:2px solid #111;
+  background:
+    radial-gradient(circle at 30% 30%, #ffffff, #f1f1f1),
+    linear-gradient(135deg, rgba(255,45,85,.10), rgba(91,140,255,.10));
+  box-shadow: var(--shadow);
+  margin: 0 auto 10px;
+  transition: transform .2s ease;
+
+  /* TAMBAHAN INI PENTING */
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.circle img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;     /* logo utuh, tidak kepotong */
+  padding: 14px;           /* bikin jarak biar presisi & rapi */
+  display: block;
+}
+
+    .skill-card{
+      background: var(--card);
+      border:2px solid rgba(0,0,0,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      overflow:hidden;
+      position:relative;
+    }
+    .skill-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(135deg, rgba(255,45,85,.10), rgba(91,140,255,.10));
+      opacity:.8;
+      pointer-events:none;
+    }
+    .skill-card > *{ position:relative; }
+
+    .skill-card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(0,0,0,.14);
+    }
+
+    .skill-icon{
+      width:56px;
+      height:56px;
+      border-radius: 14px;
+      border:2px solid #111;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .skill-icon img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .skill-info h3{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+    }
+    .skill-info p{
+      margin:4px 0 0;
+      font-size:13px;
+      color:#222;
+      line-height:1.4;
+    }
+
+    /* ===== PORTFOLIO GRID ===== */
+    .port-desc{ margin:0 0 18px; color:#444; font-size:14px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .card{
+      background: var(--card);
+      border:2px solid rgba(0,0,0,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 45px rgba(0,0,0,.14);
+    }
+    .card .thumb{
+      height: 150px;
+      background:
+        linear-gradient(135deg, rgba(255,45,85,.16), rgba(91,140,255,.16));
+      border-bottom: 2px solid rgba(0,0,0,.12);
+      display:grid;
+      place-items:center;
+      color:#222;
+      font-weight:900;
+    }
+    .card .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .card .body{
+      padding: 14px 14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex:1;
+    }
+    .card h3{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+    }
+    .card p{
+      margin:0;
+      font-size:13px;
+      color:#222;
+      line-height:1.5;
+    }
+    .card .meta{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:2px solid #111;
+      background:#fff;
+      font-weight:900;
+    }
+    .card a.btnlink{
+      display:inline-block;
+      text-decoration:none;
+      color:#fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      padding:8px 12px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:900;
+      border:2px solid #111;
+    }
+    .card a.btnlink:hover{
+      background:#fff;
+      color:#111;
+    }
+
+    /* ===== MESSAGE ===== */
+    .msg-grid{
+      display:grid;
+      grid-template-columns: 520px 1fr;
+      gap: 28px;
+      align-items:start;
+    }
+
+    form{
+      background: var(--card);
+      border: 2px solid rgba(0,0,0,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 120px 18px 1fr;
+      gap:10px;
+      align-items:center;
+      margin: 12px 0;
+      font-size:14px;
+    }
+    input[type="text"], input[type="date"], textarea{
+      width:100%;
+      padding:10px 12px;
+      border: 2px solid rgba(0,0,0,.25);
+      border-radius: 12px;
+      outline:none;
+      font-size:14px;
+      background:#fff;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(255,45,85,.7);
+      box-shadow: 0 0 0 4px rgba(255,45,85,.12);
+    }
+    textarea{ height: 120px; resize:none; }
+    .radio{
+      display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+    }
+    .radio label{ display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+    .btn{
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:2px solid #111;
+      background: linear-gradient(135deg, rgba(255,45,85,.14), rgba(91,140,255,.14));
+      cursor:pointer;
+      font-weight:900;
+      margin-top: 10px;
+    }
+    .btn:hover{
+      background: linear-gradient(135deg, rgba(255,45,85,.22), rgba(91,140,255,.22));
+    }
+
+    .table-card{
+      background: var(--card);
+      border: 2px solid rgba(0,0,0,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 14px 16px;
+      overflow:auto;
+    }
+    .table-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .table-head .hint{
+      font-size:12.5px;
+      color: var(--muted);
+    }
+    .btn-mini{
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 2px solid #111;
+      background: #fff;
+      cursor:pointer;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .btn-mini:hover{
+      background: linear-gradient(135deg, rgba(255,45,85,.12), rgba(91,140,255,.12));
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width: 820px;
+      font-size: 13px;
+    }
+    thead th{
+      background: linear-gradient(135deg, rgba(255,45,85,.18), rgba(91,140,255,.18));
+      border:1px solid rgba(0,0,0,.12);
+      padding:10px;
+      text-align:center;
+    }
+    tbody td{
+      border:1px solid rgba(0,0,0,.10);
+      padding:10px;
+      vertical-align:top;
+      background:#fff;
+    }
+    tbody tr:nth-child(even) td{
+      background: rgba(0,0,0,.02);
+    }
+
+    tbody td:nth-child(1),
+    tbody td:nth-child(2),
+    tbody td:nth-child(3),
+    tbody td:nth-child(5){
+      text-align:center;
+      white-space: nowrap;
+    }
+
+    .delete{
+      border:2px solid #111;
+      background:#fff;
+      border-radius: 12px;
+      padding: 6px 10px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .delete:hover{
+      background: rgba(255,45,85,.12);
+    }
+
+    .empty{
+      padding: 14px;
+      border: 2px dashed rgba(0,0,0,.25);
+      border-radius: 12px;
+      color: var(--muted);
+      text-align:center;
+      margin-top: 10px;
+    }
+
+    footer{
+      padding: 22px 28px;
+      display:flex;
+      justify-content:flex-end;
+      font-size:13px;
+      color:#222;
+      background: linear-gradient(90deg, rgba(255,45,85,.08), rgba(91,140,255,.08));
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1100px){
+      .section{ padding: 26px 20px; }
+      .banner{ height: 260px; }
+      .banner-content{ grid-template-columns: 1fr; }
+      .banner-right{ height: 160px; }
+      .grid{ grid-template-columns: 1fr; }
+      .skills-grid{ grid-template-columns: 1fr; }
+      .msg-grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px){
+      .profile-card{ flex-direction:column; text-align:center; }
     }
   </style>
 </head>
 
 <body>
-  <div class="page-frame">
-    <!-- NAVBAR -->
+  <div class="frame">
     <header>
-      <div class="logo" title="Logo">
-        <span>R<br>V<br>O</span>
+      <div class="brand-wrap">
+        <div class="logo">
+          <img src="Miqdad.jpg" alt="Foto Saya">
+        </div>
+
+        <div class="brand-text">
+          <div class="brand-name" id="navName">Miqdad</div>
+          <div class="brand-sub">My Portfolio</div>
+        </div>
       </div>
 
       <nav>
-        <a href="#">Home</a>
-        <a href="#">My Profile</a>
-        <a href="#">Portofolio</a>
-        <a href="#">Message Us</a>
+        <a href="#home">Home</a>
+        <a href="#profile">My Profile</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portofolio</a>
+        <a href="#message">Message Us</a>
       </nav>
     </header>
 
-    <!-- KONTEN -->
-    <main>
-      <h1 class="title">Form Belajar</h1>
-      <p class="subtitle">Ini adalah website latihan pertama</p>
+    <!-- HOME -->
+    <section id="home" class="section">
+      <div class="hero">
+        <h1>Hi <span id="hiName">Miqdad</span>, Welcome To MyWebsite</h1>
+        <p>Ini adalah website latihan kedua saya</p>
 
-      <div class="grid">
-        <!-- FORM KIRI -->
-        <section class="form-card">
-          <form>
-            <div class="form-row">
-              <label for="nama">Nama</label>
-              <div>:</div>
-              <input id="nama" type="text" placeholder="Nama" />
-            </div>
+        <!-- Banner -->
+        <div class="banner">
+          <img class="banner-img" src="bg2.jpg" alt="Banner" background-size="cover"
+               onerror="this.style.display='none'; document.getElementById('bannerFallback').style.display='grid';">
 
-            <div class="form-row">
-              <label for="tgl">Tanggal Lahir</label>
-              <div>:</div>
-              <input id="tgl" type="date" />
-            </div>
-
-            <div class="form-row">
-              <label>Jenis Kelamin</label>
-              <div>:</div>
-              <div class="radio-wrap">
-                <label>
-                  <input type="radio" name="jk" value="Laki-Laki" />
-                  Laki-Laki
-                </label>
-                <label>
-                  <input type="radio" name="jk" value="Perempuan" />
-                  Perempuan
-                </label>
+          <div class="banner-content">
+            <div>
+              <div class="banner-kicker"></div>
+              <h2 class="banner-title">MY PORTFOLIO</h2>
+              <p class="banner-desc">
+               Saya seorang mahasiswa Teknik Elektro yang sedang belajar membuat website menggunakan HTML, CSS, dan JavaScript.
+              </p>
+              <div class="banner-badges">
+                <span class="b-badge">HTML</span>
+                <span class="b-badge">CSS</span>
+                <span class="b-badge">JavaScript</span>
               </div>
             </div>
 
-            <div class="form-row">
-              <label for="pesan">Pesan</label>
-              <div>:</div>
-              <textarea id="pesan" placeholder="Pesan"></textarea>
+              <div class="banner-chip"></div>
+              <div class="banner-glow"></div>
             </div>
+          </div>
 
-            <button class="btn" type="submit">Submit</button>
-          </form>
-        </section>
+          <img src="Miqdad.jpg" class="banner-fallback" id="bannerFallback" style="display:none;">
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- TABEL KANAN -->
-        <section class="table-card">
+    <!-- PROFILE + HQ -->
+    <section id="profile" class="section">
+      <h2>Our Profile</h2>
+
+      <div class="profile-card">
+        <div class="profile-photo">
+          <img src="Miqdad.jpg" alt="Foto Saya">
+        </div>
+
+        <div class="profile-info">
+          <h3>Muhammad Miqdad Abdul Aziz</h3>
+          <p class="profile-role">Mahasiswa Teknik Elektro • Fullstack Developer</p>
+
+          <p class="profile-desc">
+            Saya sedang belajar membuat website menggunakan HTML, CSS, dan JavaScript.
+            Target saya: membuat portfolio rapi dan siap untuk magang/kerja.
+          </p>
+
+          <div class="profile-tags">
+            <span>Disiplin</span>
+            <span>Belajar Cepat</span>
+            <span>Problem Solving</span>
+          </div>
+        </div>
+      </div>
+
+<h2 style="margin-top:26px;">Pendidikan</h2>
+<div class="hq-row">
+  <div class="hq-item">
+    <div class="circle">
+      <img src="SMP.jpg" alt="Logo SMPQu As-Salam">
+    </div>
+    <div>SMPQu As-Salam</div>
+  </div>
+
+  <div class="hq-item">
+    <div class="circle">
+      <img src="MA.jpg" alt="Logo MA Al-Hassan">
+    </div>
+    <div>MA Al-Hassan</div>
+  </div>
+
+  <div class="hq-item">
+    <div class="circle">
+      <img src="UPI.jpg" alt="Logo Universitas Pendidikan Indonesia">
+    </div>
+    <div>Universitas Pendidikan Indonesia</div>
+  </div>
+</div>
+
+    </section>
+
+    <!-- SKILLS (pakai logo HTML/CSS/JS) -->
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+      <p class="skills-desc">Skill yang sedang saya pelajari.</p>
+
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="html.jpg" alt="HTML"
+                 onerror="this.style.display='none'; this.parentElement.textContent='HTML';">
+          </div>
+          <div class="skill-info">
+            <h3>HTML</h3>
+            <p>Membuat struktur halaman web (section, form, tabel, dll).</p>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="css.jpg" alt="CSS"
+                 onerror="this.style.display='none'; this.parentElement.textContent='CSS';">
+          </div>
+          <div class="skill-info">
+            <h3>CSS</h3>
+            <p>Mendesain tampilan: layout, warna, responsive, dan animasi ringan.</p>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="js.jpg" alt="JavaScript"
+                 onerror="this.style.display='none'; this.parentElement.textContent='JS';">
+          </div>
+          <div class="skill-info">
+            <h3>JavaScript</h3>
+            <p>Interaksi halaman: submit form, tabel dinamis, dan localStorage.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section">
+      <h2>Portofolio</h2>
+      <p class="port-desc">Beberapa project saya sedang jalani.</p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="thumb">
+            <img src="project1.jpg" alt="Project 1"
+                 onerror="this.remove(); this.parentElement.textContent='Project Image';">
+          </div>
+          <div class="body">
+            <h3>Project 1 — Form Belajar</h3>
+            <p>Latihan membuat form + layout + tabel.</p>
+            <div class="meta">
+              <span class="pill">HTML</span>
+              <span class="pill">CSS</span>
+              <a class="btnlink" href="#message">Lihat</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">
+            <img src="project2.jpg" alt="Project 2"
+                 onerror="this.remove(); this.parentElement.textContent='Project Image';">
+          </div>
+          <div class="body">
+            <h3>Project 2 — Landing Page</h3>
+            <p>Halaman promosi sederhana yang responsive.</p>
+            <div class="meta">
+              <span class="pill">HTML</span>
+              <span class="pill">CSS</span>
+              <a class="btnlink" href="#home">Lihat</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">
+            <img src="project3.jpg" alt="Project 3"
+                 onerror="this.remove(); this.parentElement.textContent='Project Image';">
+          </div>
+          <div class="body">
+            <h3>Project 3 — Message Table</h3>
+            <p>Form → masuk tabel. Ada delete, clear all, dan tersimpan.</p>
+            <div class="meta">
+              <span class="pill">JS</span>
+              <span class="pill">LocalStorage</span>
+              <a class="btnlink" href="#message">Coba</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MESSAGE US -->
+    <section id="message" class="section">
+      <h2>Message Us</h2>
+
+      <div class="msg-grid">
+        <form id="messageForm">
+          <div class="row">
+            <label for="nama">Nama</label>
+            <div>:</div>
+            <input id="nama" type="text" placeholder="Nama" required />
+          </div>
+
+          <div class="row">
+            <label for="tgl">Tanggal Lahir</label>
+            <div>:</div>
+            <input id="tgl" type="date" required />
+          </div>
+
+          <div class="row">
+            <label>Jenis Kelamin</label>
+            <div>:</div>
+            <div class="radio">
+              <label><input type="radio" name="jk" value="Laki-Laki" required> Laki-Laki</label>
+              <label><input type="radio" name="jk" value="Perempuan" required> Perempuan</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="pesan">Pesan</label>
+            <div>:</div>
+            <textarea id="pesan" placeholder="Tulis pesan kamu..." required></textarea>
+          </div>
+
+          <button class="btn" type="submit">Submit</button>
+        </form>
+
+        <div class="table-card">
+          <div class="table-head">
+            <div>
+              <div style="font-weight:900;">Hasil Pesan</div>
+              <div class="hint">Setiap submit masuk ke tabel (tersimpan walau refresh).</div>
+            </div>
+            <button class="btn-mini" id="clearAllBtn" type="button">Clear All</button>
+          </div>
+
           <table>
             <thead>
               <tr>
@@ -314,57 +960,132 @@
                 <th>Tanggal Lahir</th>
                 <th>Jenis Kelamin</th>
                 <th>Pesan</th>
-                <th>Profile</th>
+                <th>Waktu Submit</th>
                 <th>Delete</th>
               </tr>
             </thead>
-
-            <tbody>
-              <tr>
-                <td>Ada Lovelace</td>
-                <td>December 10, 1815</td>
-                <td>Perempuan</td>
-                <td>Belajar Buat Website</td>
-                <td><span class="link">Klik Disini</span></td>
-                <td><span class="trash" title="Delete"></span></td>
-              </tr>
-
-              <tr>
-                <td>Grace Hopper</td>
-                <td>December 9, 1906</td>
-                <td>Perempuan</td>
-                <td>Hello World</td>
-                <td><span class="link">Klik Disini</span></td>
-                <td><span class="trash" title="Delete"></span></td>
-              </tr>
-
-              <tr>
-                <td>Margaret Hamilton</td>
-                <td>August 17, 1936</td>
-                <td>Perempuan</td>
-                <td>Test Dulu</td>
-                <td><span class="link">Klik Disini</span></td>
-                <td><span class="trash" title="Delete"></span></td>
-              </tr>
-
-              <tr>
-                <td>Joan Clarke</td>
-                <td>June 24, 1917</td>
-                <td>Laki-Laki</td>
-                <td>Selalu Semangat</td>
-                <td><span class="link">Klik Disini</span></td>
-                <td><span class="trash" title="Delete"></span></td>
-              </tr>
-            </tbody>
+            <tbody id="tbody"></tbody>
           </table>
-        </section>
-      </div>
-    </main>
 
-    <!-- FOOTER -->
-    <footer>
-      <div>Created By RevoU</div>
-    </footer>
+          <div id="emptyState" class="empty" style="display:none;">
+            Belum ada pesan. Isi form lalu klik <b>Submit</b>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Created By Miqdad</footer>
   </div>
+
+  <script>
+    const form = document.getElementById('messageForm');
+    const tbody = document.getElementById('tbody');
+    const emptyState = document.getElementById('emptyState');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    const hiName = document.getElementById('hiName');
+    const navName = document.getElementById('navName');
+
+    const STORAGE_KEY = "messages_table_v1";
+
+    function formatDate(dateStr){
+      if(!dateStr) return "-";
+      const d = new Date(dateStr + "T00:00:00");
+      return d.toLocaleDateString("id-ID", { day:"2-digit", month:"2-digit", year:"numeric" });
+    }
+
+    function nowString(){
+      return new Date().toString();
+    }
+
+    function loadData(){
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function saveData(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function render(){
+      const data = loadData();
+      tbody.innerHTML = "";
+      emptyState.style.display = data.length === 0 ? "block" : "none";
+
+      data.forEach((item, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(item.nama)}</td>
+          <td>${escapeHtml(item.tgl)}</td>
+          <td>${escapeHtml(item.jk)}</td>
+          <td style="min-width:260px; text-align:left;">${escapeHtml(item.pesan)}</td>
+          <td>${escapeHtml(item.time)}</td>
+          <td style="text-align:center;">
+            <button class="delete" data-index="${index}" type="button">Hapus</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById("nama").value.trim();
+      const tglRaw = document.getElementById("tgl").value;
+      const pesan = document.getElementById("pesan").value.trim();
+      const jkEl = document.querySelector('input[name="jk"]:checked');
+      const jk = jkEl ? jkEl.value : "-";
+
+      const newItem = {
+        nama: nama || "-",
+        tgl: formatDate(tglRaw),
+        jk: jk,
+        pesan: pesan || "-",
+        time: nowString()
+      };
+
+      if(nama){
+        hiName.textContent = nama;
+        navName.textContent = nama;
+      }
+
+      const data = loadData();
+      data.unshift(newItem);
+      saveData(data);
+
+      render();
+      form.reset();
+    });
+
+    tbody.addEventListener("click", (e) => {
+      const btn = e.target.closest(".delete");
+      if(!btn) return;
+
+      const index = Number(btn.dataset.index);
+      const data = loadData();
+      data.splice(index, 1);
+      saveData(data);
+      render();
+    });
+
+    clearAllBtn.addEventListener("click", () => {
+      const ok = confirm("Hapus semua pesan?");
+      if(!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      render();
+    });
+
+    render();
+  </script>
 </body>
 </html>
