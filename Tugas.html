@@ -1,7 +1,370 @@
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Belajar</title>
 
-    </body>
+  <style>
+    /* =========================
+       1) RESET SEDERHANA
+    ========================== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+
+    /* =========================
+       2) WRAPPER & BORDER LUAR
+       (mirip frame di gambar)
+    ========================== */
+    .page-frame {
+      border: 2px solid #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =========================
+       3) NAVBAR
+    ========================== */
+    header {
+      border-bottom: 2px solid #333;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffd400;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .logo span { font-size: 12px; line-height: 1; }
+
+    /* menu kotak-kotak */
+    nav {
+      display: flex;
+      border: 2px solid #777;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    nav a {
+      text-decoration: none;
+      color: #111;
+      padding: 10px 18px;
+      border-right: 2px solid #777;
+      background: #f6f6f6;
+      font-size: 14px;
+    }
+    nav a:last-child { border-right: none; }
+    nav a:hover { background: #eaeaea; }
+
+    /* =========================
+       4) KONTEN UTAMA
+    ========================== */
+    main {
+      flex: 1;
+      padding: 40px 50px;
+    }
+
+    .title {
+      margin: 0 0 6px 0;
+      font-size: 28px;
+    }
+    .subtitle {
+      margin: 0 0 30px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 520px 1fr; /* kiri form, kanan tabel */
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* =========================
+       5) FORM
+    ========================== */
+    .form-card {
+      padding: 10px 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 120px 18px 1fr; /* label : input */
+      align-items: center;
+      margin: 14px 0;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    label { color: #222; }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      border: 2px solid #888;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    .radio-wrap {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .radio-wrap label {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border: 2px solid #777;
+      background: #ececec;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover { background: #e2e2e2; }
+
+    /* =========================
+       6) TABEL
+    ========================== */
+    .table-card {
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 14px;
+    }
+
+    thead th {
+      background: #e6e6e6;
+      border: 1px solid #cfcfcf;
+      padding: 12px 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    tbody td {
+      border: 1px solid #d7d7d7;
+      padding: 14px 10px;
+      vertical-align: middle;
+      text-align: center;
+      word-wrap: break-word;
+    }
+
+    .link {
+      color: #0b63ff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* ikon delete sederhana */
+    .trash {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      position: relative;
+      border: 2px solid #111;
+      border-top: none;
+      border-radius: 2px;
+    }
+    .trash::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 2px;
+      right: 2px;
+      height: 4px;
+      border: 2px solid #111;
+      border-bottom: none;
+      border-radius: 2px 2px 0 0;
+    }
+    .trash::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      width: 2px;
+      height: 10px;
+      background: #111;
+      transform: translateX(-50%);
+    }
+
+    /* =========================
+       7) FOOTER
+    ========================== */
+    footer {
+      border-top: 2px solid #333;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: flex-end;
+      font-size: 14px;
+    }
+
+    /* =========================
+       8) RESPONSIVE (HP)
+    ========================== */
+    @media (max-width: 1000px) {
+      main { padding: 24px; }
+      .grid { grid-template-columns: 1fr; gap: 30px; }
+      nav a { padding: 10px 12px; }
+    }
+  </style>
 </head>
+
+<body>
+  <div class="page-frame">
+    <!-- NAVBAR -->
+    <header>
+      <div class="logo" title="Logo">
+        <span>R<br>V<br>O</span>
+      </div>
+
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">My Profile</a>
+        <a href="#">Portofolio</a>
+        <a href="#">Message Us</a>
+      </nav>
+    </header>
+
+    <!-- KONTEN -->
+    <main>
+      <h1 class="title">Form Belajar</h1>
+      <p class="subtitle">Ini adalah website latihan pertama</p>
+
+      <div class="grid">
+        <!-- FORM KIRI -->
+        <section class="form-card">
+          <form>
+            <div class="form-row">
+              <label for="nama">Nama</label>
+              <div>:</div>
+              <input id="nama" type="text" placeholder="Nama" />
+            </div>
+
+            <div class="form-row">
+              <label for="tgl">Tanggal Lahir</label>
+              <div>:</div>
+              <input id="tgl" type="date" />
+            </div>
+
+            <div class="form-row">
+              <label>Jenis Kelamin</label>
+              <div>:</div>
+              <div class="radio-wrap">
+                <label>
+                  <input type="radio" name="jk" value="Laki-Laki" />
+                  Laki-Laki
+                </label>
+                <label>
+                  <input type="radio" name="jk" value="Perempuan" />
+                  Perempuan
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="pesan">Pesan</label>
+              <div>:</div>
+              <textarea id="pesan" placeholder="Pesan"></textarea>
+            </div>
+
+            <button class="btn" type="submit">Submit</button>
+          </form>
+        </section>
+
+        <!-- TABEL KANAN -->
+        <section class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Tanggal Lahir</th>
+                <th>Jenis Kelamin</th>
+                <th>Pesan</th>
+                <th>Profile</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Ada Lovelace</td>
+                <td>December 10, 1815</td>
+                <td>Perempuan</td>
+                <td>Belajar Buat Website</td>
+                <td><span class="link">Klik Disini</span></td>
+                <td><span class="trash" title="Delete"></span></td>
+              </tr>
+
+              <tr>
+                <td>Grace Hopper</td>
+                <td>December 9, 1906</td>
+                <td>Perempuan</td>
+                <td>Hello World</td>
+                <td><span class="link">Klik Disini</span></td>
+                <td><span class="trash" title="Delete"></span></td>
+              </tr>
+
+              <tr>
+                <td>Margaret Hamilton</td>
+                <td>August 17, 1936</td>
+                <td>Perempuan</td>
+                <td>Test Dulu</td>
+                <td><span class="link">Klik Disini</span></td>
+                <td><span class="trash" title="Delete"></span></td>
+              </tr>
+
+              <tr>
+                <td>Joan Clarke</td>
+                <td>June 24, 1917</td>
+                <td>Laki-Laki</td>
+                <td>Selalu Semangat</td>
+                <td><span class="link">Klik Disini</span></td>
+                <td><span class="trash" title="Delete"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>Created By RevoU</div>
+    </footer>
+  </div>
+</body>
 </html>
